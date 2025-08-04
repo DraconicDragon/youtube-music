@@ -4,7 +4,6 @@ on:
   push:
     branches: [ master ]
   pull_request:
-  workflow_dispatch:
 
 env:
   NODE_VERSION: "22.x"
@@ -22,7 +21,8 @@ jobs:
         run: |
           git remote add johannes https://github.com/Johannes7k75/youtube-music.git
           git fetch johannes
-          git merge johannes/feat/api-websocket --no-ff --no-edit
+          # The following command now includes the flag to allow merging unrelated histories
+          git merge johannes/feat/api-websocket --no-ff --no-edit --allow-unrelated-histories
       
       - name: Install pnpm
         uses: pnpm/action-setup@v4
