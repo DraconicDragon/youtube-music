@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # This step now directly checks out the repository and branch you want to build.
       - name: Checkout feature branch from johannes repo
         uses: actions/checkout@v4
         with:
@@ -36,11 +35,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build AppImage
+      - name: Build AppImage Only
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          pnpm release:linux
+          # We call electron-builder directly to specify only the AppImage target
+          pnpm electron-builder --linux appimage --publish never
 
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v4
@@ -48,3 +48,4 @@ jobs:
           name: YouTube-Music-AppImage
           path: |
             dist/*.AppImage
+            !dist/*-arm64.AppImage
