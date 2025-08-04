@@ -39,15 +39,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # 1. Build the application source code into the 'dist' directory
           pnpm build
-          # 2. Package the contents of 'dist' into an AppImage
           pnpm electron-builder --linux appimage --publish never
 
       - name: Upload AppImage Artifact
         uses: actions/upload-artifact@v4
         with:
           name: YouTube-Music-AppImage
+          # This path is now corrected to look in the 'pack' directory
           path: |
-            dist/*.AppImage
-            !dist/*-arm64.AppImage
+            pack/*.AppImage
+            !pack/*-arm64.AppImage
