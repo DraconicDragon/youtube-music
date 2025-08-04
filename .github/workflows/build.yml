@@ -48,4 +48,3 @@ jobs:
           name: YouTube-Music-AppImage
           path: |
             dist/*.AppImage
-            !dist/*-arm64.AppImage
